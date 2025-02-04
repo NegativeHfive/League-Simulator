@@ -1,0 +1,5 @@
+04-02-2025 
+- Ik heb het repository gemaakt. 
+- Ik heb ook een thema gekozen dat is PREMIER LEAGUE.
+Mijn plannen voor deze week  
+* Toevoegen van teams met the crud system
