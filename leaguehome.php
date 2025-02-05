@@ -15,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>League Simulator</title>
     <link rel="stylesheet" href="./css/leaguehome.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
 
@@ -38,11 +39,11 @@
 
        <div class="menu">
              <div class="title">
-                <h2>LEAGUE</h2>
+                <h2 class="league">LEAGUE</h2>
                 <h1>Simulator</h1>
                 <a href="#" class="play">PLAY</a>
                 <div class="text">
-                    A fun and interactive football game where you can create your own league! Add teams, remove teams, and watch them compete for glory. Each team battles it out on the field, and a dynamic ranking table updates based on wins, losses, goals, and goal difference. You can even export your league to track progress or share with friends. Enjoy the thrill of managing your own football championship—have fun and play your way to victory! ⚽🏆
+                    A fun and interactive football game where you can create your own league! Add teams, remove teams, and watch them compete for glory. Each team battles it out on the field, and a dynamic ranking table updates based on wins, losses, goals, and goal difference. You can even export your league to track progress or share with friends. Enjoy the thrill of managing your own football championship—have fun and play your way to victory!
                 </div>
             </div>
 
@@ -76,6 +77,7 @@
 
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script src="./js/leaguehome.js" defer></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

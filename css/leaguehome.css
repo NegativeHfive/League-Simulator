@@ -1,8 +1,22 @@
-body{
+body {
     margin: 0;
     padding: 0;
-    background-color: antiquewhite;
+    background: linear-gradient(45deg, #ff7e5f, #feb47b, beige, #91eae4);
+    background-size: 400% 400%;
+    animation: gradientMove 5s ease infinite;
     overflow-x: hidden;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 @font-face {
@@ -86,11 +100,13 @@ body{
     width: 100%;
     text-align: center;
     align-items: center;
+    opacity: 1;
 }
 
 
 .menu .img{
     width: 100%;
+    opacity: 1;
 }
 
 .img img{
@@ -166,3 +182,4 @@ body{
     font-family: questrail;
     font-size: smaller;
 }
+
