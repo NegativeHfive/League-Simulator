@@ -16,6 +16,8 @@
     <title>League Simulator</title>
     <link rel="stylesheet" href="./css/leaguehome.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <audio id="audio" type="audio/mp3" src="./audio/CITY by Louis Culture.mp3" autoplay loop ></audio>
+
 </head>
 <body>
 
@@ -77,7 +79,15 @@
 
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script src="./js/leaguehome.js" defer></script>
+<script src="./js/leaguehome.js"  defer></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+    window.addEventListener("load", () => {
+      let audio = document.getElementById("audio");
+      if (audio) {
+        audio.volume = 0.1;  // Set the volume to 10% of the maximum volume
+      }
+    });
+  </script>
 </body>
 </html>
