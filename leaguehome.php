@@ -80,14 +80,16 @@
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script src="./js/leaguehome.js"  defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
     window.addEventListener("load", () => {
       let audio = document.getElementById("audio");
       if (audio) {
-        audio.volume = 0.1;  // Set the volume to 10% of the maximum volume
+        audio.volume = 0.07; 
       }
     });
   </script>
+
 </body>
 </html>
