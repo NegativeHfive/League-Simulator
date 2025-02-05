@@ -54,6 +54,30 @@
             </div>
        </div>
 
+       <div class="teams">
+          <ion-icon name="football" class="football"></ion-icon>
+          <div class="teamstext">
+            <h1>Add and Edit Teams</h1>
+            <p>You can add, edit, delete, and view all the teams in this game. Additionally,<br> you can track their performance, compete in matches, and see real-time rankings based on wins<br>, losses, goals, and overall standings</p>
+          </div>
+       </div>
+
+       <div class="rankings">
+          <div class="teamstext">
+            <h1>Rankings</h1>
+            <p>In this game, rankings are based on team performance, including wins, losses,<br> goals scored, and goal difference. Teams earn points for victories, and their positions on the leaderboard update <br>dynamically based on match results.</p>
+          </div>
+          <ion-icon name="sunny" class="podium"></ion-icon>
+       </div>
+
+       <div class="csv">
+          <ion-icon name="document" class="document"></ion-icon>
+          <div class="teamstext">
+            <h1>Rankings</h1>
+            <p>In this game, rankings are based on team performance, including wins, losses,<br> goals scored, and goal difference. Teams earn points for victories, and their positions on the leaderboard update <br>dynamically based on match results.</p>
+          </div>
+       </div>
+
 
        <div class="footer">
           <div class="links">

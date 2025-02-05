@@ -14,7 +14,7 @@ let Titleh2 = document.querySelector(".league");
 //variable for title
 let title = document.querySelector(".title");
 gsap.from(title,{
-    duration : 3,
+    duration : 7,
     x:-300,
     opacity:0,
     ease:"power.out"
@@ -23,8 +23,25 @@ gsap.from(title,{
 //varaible for the image 
 let image = document.querySelector(".img");
 gsap.from(image, {
-  duration: 3,
+  duration: 7,
   x: 300,
   opacity: 0,
   ease: "power.out",
+});
+
+//dit is om de bal te draaien
+let footballIcon = document.querySelector(".football");
+gsap.from(footballIcon, {
+  duration: 3,
+  rotation:360,
+  repeat:-1,
+  ease: "linear",
+});
+
+let sunnyIcon = document.querySelector(".podium");
+gsap.from(sunnyIcon, {
+  duration: 3,
+  rotation: 360,
+  repeat: -1,
+  ease: "linear",
 });
