@@ -2,6 +2,7 @@ body{
     margin: 0;
     padding: 0;
     background-color: antiquewhite;
+    overflow-x: hidden;
 }
 
 @font-face {
@@ -84,6 +85,7 @@ body{
     flex-direction: column;
     width: 100%;
     text-align: center;
+    align-items: center;
 }
 
 
@@ -98,7 +100,7 @@ body{
 .title h2{
     font-family: null;
     font-size: 2em;
-    color: goldenrod;
+    color: gold;
     text-shadow: 1px 1px 1px black
 }
 
@@ -106,4 +108,61 @@ body{
     font-family: rider;
     font-size: 6em;
     margin-top: -2%;
+}
+
+.play{
+    font-family: null;
+    text-decoration: none;
+    color: gold;
+    background-color: black;
+    width: max-content;
+    padding: 10px;
+    margin-top: -2%;
+}
+
+.title .text{
+    width: 70%;
+    margin-top: 5%;
+    font-family: questrail;
+    font-size: small;
+}
+
+.footer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: beige;
+    margin-top: 10%;
+    padding: 1px;
+}
+
+.footer .links{
+    display: flex;
+    flex-direction: column;
+}
+
+.footer .links a{
+    margin-top: 0.5%;
+    font-family: questrail;
+    font-size: small;
+    text-decoration: none;
+    color: black;
+}
+
+.footer .footericon{
+    margin-top: 2%;
+}
+
+.footericon ion-icon{
+    margin-left: 10px;
+    font-size: larger;
+    border: 1px solid black;
+    padding: 5px;
+    box-shadow: 1px 1px black;
+}
+
+.footer .passages p{
+    font-family: questrail;
+    font-size: smaller;
 }

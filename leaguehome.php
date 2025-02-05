@@ -41,11 +41,35 @@
                 <h2>LEAGUE</h2>
                 <h1>Simulator</h1>
                 <a href="#" class="play">PLAY</a>
+                <div class="text">
+                    A fun and interactive football game where you can create your own league! Add teams, remove teams, and watch them compete for glory. Each team battles it out on the field, and a dynamic ranking table updates based on wins, losses, goals, and goal difference. You can even export your league to track progress or share with friends. Enjoy the thrill of managing your own football championship—have fun and play your way to victory! ⚽🏆
+                </div>
             </div>
 
             <div class="img">
                 <img class="mbappe" src="./images/French-soccer-player-Kylian-Mbappe-FIFA-World-Cup-December-10-2022-Photoroom.png" alt="">
             </div>
+       </div>
+
+
+       <div class="footer">
+          <div class="links">
+            <a href="#">Home</a>
+            <a href="#">About Me</a>
+            <a href="#">Help</a>
+          </div>
+
+          <div class="footericon">
+            <ion-icon name="logo-facebook"></ion-icon>
+            <ion-icon name="logo-youtube"></ion-icon>
+            <ion-icon name="logo-designernews"></ion-icon>
+            <ion-icon name="logo-amazon"></ion-icon>
+          </div>
+
+          <div class="passages">
+            <p>Project made By Godrine Manu</p>
+            <p>&copy; 2025</p>
+          </div>
        </div>
 
         
