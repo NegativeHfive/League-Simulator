@@ -36,7 +36,7 @@ class Team{
     
     foreach ($teams as $team) {
         echo "<tr>
-            <td><img src='{$team['foto']}' width='50' height='50'></td>
+            <td><img src='{$team['foto']}' width='50' height='50' class='foto'></td>
                 <td class='team'>{$team['name']}</td>
                 <td>{$team['continent']}</td>
                 <td>{$team['ratings']}</td>
