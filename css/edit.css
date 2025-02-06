@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(45deg, aliceblue, burlywood, beige, antiquewhite);
+    background: linear-gradient(45deg, yellow, gold, goldenrod, antiquewhite);
     background-size: 5000% 5000%;
     animation: gradientMove 10s ease infinite;
     overflow-x: hidden;
@@ -38,6 +38,11 @@ body {
 @font-face {
     font-family: without;
     src: url(../fonts/WithoutAltSans-Bold.ttf);
+}
+
+@font-face {
+    font-family: league;
+    src: url(../fonts/LeagueSpartan-Bold.otf);
 }
 
 .navbar{
@@ -143,7 +148,7 @@ table{
 }
 
 .team{
-    font-family: without;
+    font-family: league;
 }
 
 .foto {
@@ -151,5 +156,53 @@ table{
   height: 50px;
   object-fit: cover; 
   border-radius: 5px; 
-  border: 0.3px solid black; 
+  border: none; 
+}
+
+table th{
+    font-family: league;
+}
+
+table tr{
+    transition: all 1s ease;
+    opacity: 0;
+}
+
+table tr:hover{
+    background-color: black ;
+    color: antiquewhite;
+}
+
+.edit-btn,.delete-btn{
+    text-decoration: none;
+    color: antiquewhite;
+    background-color: black;
+    padding: 5px;
+}
+
+.editform{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+}
+
+form input{
+    width: 30%;
+    height: 5vh;
+    font-family: questrail;
+    text-align: center;
+
+}
+
+.editform {
+    font-family: questrail;
+}
+
+.editform button{
+    padding: 10px;
+    font-family: questrail;
+    background-color: black;
+    color: gold;
+    border: none;
 }

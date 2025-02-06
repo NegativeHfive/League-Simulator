@@ -6,7 +6,7 @@ class Database{
     public $statement;
 
     //constructor
-    public function __construct($db='league',$host='localhost:3310',$user='root',$pwd=''){
+    public function __construct($db='league',$host='localhost:3311',$user='root',$pwd=''){
         //try en catch voor meer duidelijkheid met fouten 
         try{
             $this->pdo = new PDO("mysql:host=$host;dbname=$db",$user,$pwd);

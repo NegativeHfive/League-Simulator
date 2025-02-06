@@ -115,13 +115,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     window.addEventListener("load", () => {
       let audio = document.getElementById("bgMusic");
       if (audio) {
-        audio.volume = 0.5; 
+        audio.volume = 0.1; 
       }
     });
     setTimeout(() => {
         document.getElementById("ratingDisplay").style.visibility = "visible";
     }, 5000);
   </script>
-  
+  <script src="../js/team.js" defer></script>
 </body>
 </html>

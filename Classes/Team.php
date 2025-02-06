@@ -31,19 +31,50 @@ class Team{
     }
 
     //render all the teams 
-    public function renderTeams(){
+public function renderTeams(){
     $teams = $this->selectAllTeams();
-    
+
     foreach ($teams as $team) {
-        echo "<tr>
+        echo "<tr class='fade'>
             <td><img src='{$team['foto']}' width='50' height='50' class='foto'></td>
-                <td class='team'>{$team['name']}</td>
-                <td>{$team['continent']}</td>
-                <td>{$team['ratings']}</td>
-              </tr>";
+            <td class='team'>{$team['name']}</td>
+            <td class='team'>{$team['continent']}</td>
+            <td class='team'>{$team['ratings']}</td>
+            <td>
+                <a href='edit_team.php?ID={$team['ID']}' class='edit-btn'>Edit</a>
+                <a href='delete_team.php?ID={$team['ID']}' class='delete-btn' onclick='return confirm(\"Are you sure?\")'>Delete</a>
+            </td>
+        </tr>";
     }
 }
 
+
+    // update a team
+    public function updateTeam($ID,$name,$ratings,$continent,$foto){
+        $query = "UPDATE teams SET name=:name,ratings=:ratings,continent=:continent,foto=:foto WHERE ID = :ID";
+        $parameters = [
+            ':ID'=>$ID,
+            ':name'=>$name,
+            'ratings'=>$ratings,
+            ':continent'=>$continent,
+            ':foto'=>$foto
+        ];
+
+        return $this->db->run($query,$parameters);
+    }
+
+    //select a team by its ID
+    public function selectTeamById($ID){
+        $query = "SELECT * FROM teams WHERE ID = :ID";
+        return $this->db->run($query, [':ID' => $ID])->fetch(PDO::FETCH_ASSOC);
+    }
+
+    //delete a team 
+    public function deleteTeam($ID){
+        $query= "DELETE FROM teams WHERE ID = :ID";
+        $parameters = [":ID"=>$ID];
+        return $this->db->run($query,$parameters);
+    }
 
 
     

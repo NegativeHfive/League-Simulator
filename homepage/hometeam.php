@@ -61,7 +61,7 @@
     window.addEventListener("load", () => {
       let audio = document.getElementById("bgMusic");
       if (audio) {
-        audio.volume = 0.5; 
+        audio.volume = 0.1; 
       }
     });
   </script>

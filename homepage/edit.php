@@ -58,7 +58,7 @@ include_once "../Classes/Team.php";
             <th>Team</th>
             <th>Continent</th>
             <th>Ratings</th>
-            
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -79,11 +79,12 @@ include_once "../Classes/Team.php";
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script src="../js/music.js" defer></script>
+<script src="../js/team.js" defer></script>
 <script>
     window.addEventListener("load", () => {
       let audio = document.getElementById("bgMusic");
       if (audio) {
-        audio.volume = 0.5; 
+        audio.volume = 0.1; 
       }
     });
     setTimeout(() => {
