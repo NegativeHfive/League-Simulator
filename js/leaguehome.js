@@ -14,7 +14,7 @@ let Titleh2 = document.querySelector(".league");
 //variable for title
 let title = document.querySelector(".title");
 gsap.from(title,{
-    duration : 7,
+    duration : 2,
     x:-300,
     opacity:0,
     ease:"power.out"
@@ -23,7 +23,7 @@ gsap.from(title,{
 //varaible for the image 
 let image = document.querySelector(".img");
 gsap.from(image, {
-  duration: 7,
+  duration: 2,
   x: 300,
   opacity: 0,
   ease: "power.out",
@@ -45,3 +45,63 @@ gsap.from(sunnyIcon, {
   repeat: -1,
   ease: "linear",
 });
+
+
+let dataIcon = document.querySelector(".document");
+gsap.to(dataIcon, {
+  duration: 1.5,
+  y: -20, // Moves up by 20px
+  repeat: -1,
+  yoyo: true, // Moves back and forth
+  ease: "sine.inOut",
+});
+
+
+document.querySelector(".play").addEventListener("click",function (event){
+  event.preventDefault(); // dit voorkomt onnmeiddelijk
+
+  gsap.to("body",{
+    opacity:0,
+    duration:0.8,
+    onComplete:()=>{
+      window.location.href = event.target.href;
+    }
+  })
+})
+
+document.querySelector(".homelink").addEventListener("click", function (event) {
+  event.preventDefault(); // dit voorkomt onnmeiddelijk
+
+  gsap.to("body", {
+    opacity: 0,
+    duration: 0.8,
+    onComplete: () => {
+      window.location.href = event.target.href;
+    },
+  });
+});
+
+document.querySelector(".aboutmelink").addEventListener("click", function (event) {
+  event.preventDefault(); // dit voorkomt onnmeiddelijk
+
+  gsap.to("body", {
+    opacity: 0,
+    duration: 0.8,
+    onComplete: () => {
+      window.location.href = event.target.href;
+    },
+  });
+});
+
+document.querySelector(".helplink").addEventListener("click", function (event) {
+  event.preventDefault(); // dit voorkomt onnmeiddelijk
+
+  gsap.to("body", {
+    opacity: 0,
+    duration: 0.8,
+    onComplete: () => {
+      window.location.href = event.target.href;
+    },
+  });
+});
+

@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(45deg, aliceblue, burlywood, beige, antiquewhite);
+    background-size: 5000% 5000%;
+    animation: gradientMove 10s ease infinite;
+    overflow-x: hidden;
+    color: black;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@font-face {
+    font-family: rider;
+    src: url(../fonts/Black\ Rider.otf);
+}
+
+@font-face {
+    font-family: null;
+    src: url(../fonts/Null_Free.otf);
+}
+
+@font-face {
+    font-family: questrail;
+    src: url(../fonts/Questrial-Regular.ttf);
+}
+
+@font-face {
+    font-family: without;
+    src: url(../fonts/WithoutAltSans-Bold.ttf);
+}
+
+.navbar{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.navbar h2{
+    font-family: without
+}
+
+
+
+.navbar .icons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50%;
+    align-items: center;
+}
+
+.navbar .icons a{
+    font-family: questrail;
+    text-decoration: none;
+    color: black;
+    background-color: none;
+    transition:all 0.2s ease-in;
+}
+
+.navbar .icons a:hover{
+    color: goldenrod;
+}
+
+
+
+.icons div{
+    background-color: none;
+    padding: 10px;
+    transition:all 0.6s ease-in;
+}
+
+.icons div:hover{
+    background-color: black;
+    color: goldenrod;
+}

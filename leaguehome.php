@@ -16,7 +16,8 @@
     <title>League Simulator</title>
     <link rel="stylesheet" href="./css/leaguehome.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <audio id="audio" type="audio/mp3" src="./audio/CITY by Louis Culture.mp3" autoplay loop ></audio>
+    <audio id="bgMusic" src="./audio/CITY by Louis Culture.mp3" autoplay loop></audio>
+
 
 </head>
 <body>
@@ -26,15 +27,15 @@
             <div class="icons">
                 <div class="home">
                     <ion-icon name="home"></ion-icon>
-                    <a href="#">Home</a>
+                    <a href="./leaguehome.php" class="homelink">Home</a>
                 </div>
                 <div class="about">
                     <ion-icon name="man"></ion-icon>
-                    <a href="#">About Me</a>
+                    <a href="./aboutme.php" class="aboutmelink">About Me</a>
                 </div>
                 <div class="help">
                     <ion-icon name="help-circle"></ion-icon>
-                    <a href="#">Help</a>
+                    <a href="./help.php" class="helplink">Help</a>
                 </div>
             </div>
         </div>
@@ -43,7 +44,7 @@
              <div class="title">
                 <h2 class="league">LEAGUE</h2>
                 <h1>Simulator</h1>
-                <a href="#" class="play">PLAY</a>
+                <a href="./homepage/hometeam.php" class="play">PLAY</a>
                 <div class="text">
                     A fun and interactive football game where you can create your own league! Add teams, remove teams, and watch them compete for glory. Each team battles it out on the field, and a dynamic ranking table updates based on wins, losses, goals, and goal difference. You can even export your league to track progress or share with friends. Enjoy the thrill of managing your own football championship—have fun and play your way to victory!
                 </div>
@@ -71,9 +72,9 @@
        </div>
 
        <div class="csv">
-          <ion-icon name="document" class="document"></ion-icon>
+          <ion-icon name="cellular" class="document"></ion-icon>
           <div class="teamstext">
-            <h1>Rankings</h1>
+            <h1>Export Data</h1>
             <p>In this game, rankings are based on team performance, including wins, losses,<br> goals scored, and goal difference. Teams earn points for victories, and their positions on the leaderboard update <br>dynamically based on match results.</p>
           </div>
        </div>
@@ -81,9 +82,9 @@
 
        <div class="footer">
           <div class="links">
-            <a href="#">Home</a>
-            <a href="#">About Me</a>
-            <a href="#">Help</a>
+            <a href="./leaguehome.php">Home</a>
+            <a href="./aboutme.php">About Me</a>
+            <a href="./help.php">Help</a>
           </div>
 
           <div class="footericon">
@@ -106,11 +107,12 @@
 <script src="./js/leaguehome.js"  defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="./js/music.js" defer></script>
 <script>
     window.addEventListener("load", () => {
-      let audio = document.getElementById("audio");
+      let audio = document.getElementById("bgMusic");
       if (audio) {
-        audio.volume = 0.07; 
+        audio.volume = 0.5; 
       }
     });
   </script>
