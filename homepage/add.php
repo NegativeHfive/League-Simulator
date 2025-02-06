@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
        <div class="form">
        <div class="form">
-        <form action="../homepage/edit.php" method="post" enctype="multipart/form-data">
+        <form action="../homepage/add.php" method="post" enctype="multipart/form-data">
             <label for="name">Your Team:</label><br>
             <input type="text" name="name" value="<?php echo $teamName; ?>" required><br><br>
 
