@@ -1,39 +1,40 @@
 <?php
-
 include_once "../Classes/Team.php";
 
-if($_SERVER['REQUEST_METHOD']=="POST"){
-    $teamName = htmlspecialchars($_POST['name']);
-    $continent = htmlspecialchars($_POST['continent']);
-    $ratings = rand(1,100);
-    $foto = $_FILES['foto'];
+$ratings = null;  
+$teamName = "";
+$continent = "";
+$foto = null;
+$fotoPath = "";
 
-    $fotoPath = '../uploads'.basename($foto['name']);
-    $fotoSaved = move_uploaded_file($foto['tmp_name'],$fotoPath);
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if (isset($_POST['submit'])) {
+        $teamName = htmlspecialchars($_POST['name']);
+        $continent = htmlspecialchars($_POST['continent']);
+        
+        $ratings = rand(1, 100);  
 
-    if($fotoSaved){
-        $team = new Team();
-        $success = $team->insertTeam($teamName,$continent,$ratings,$fotoPath);
+        // Voor het toevogen van teams
+        $foto = $_FILES['foto'];
+        $fotoPath = '../uploads/' . basename($foto['name']);
+        $fotoSaved = move_uploaded_file($foto['tmp_name'], $fotoPath);
 
-        if($success){
-            echo "Team added successfully";
-        }
-        else{
-            echo "Team not added";
+        // If file uploaded successfully, insert team into database
+        if ($fotoSaved) {
+            $team = new Team();
+            $success = $team->insertTeam($teamName, $ratings, $continent, $fotoPath);
+
+            if ($success) {
+                echo "Team added successfully!";
+            } else {
+                echo "There was an issue adding the team.";
+            }
+        } else {
+            echo "Uploading the photo failed.";
         }
     }
-    else{
-        echo "Uploading the foto couldn't work";
-    }
-
-
 }
-
-
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,45 +65,34 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 </div>
                 <div class="help">
                     <ion-icon name="document-text"></ion-icon>
-                    <a href="#" class="editlink">Export Data</a>
+                    <a href="#" class="export">Export Data</a>
                 </div>
             </div>
         </div>
 
         <h1>Add a Team </h1>
 
-        <div class="form">
-             <form action="../homepage/edit.php" method="post" enctype="multipart/form-data">
-                <label for="name" name="name">Your Team:</label><br>
-                <input type="text" name="name"><br><br>
-                <label for="continent" name="continent">Choose a continent:</label><br>
-                <select name="continent" id="cars">
-                    <option value="europe">Europe</option>
-                    <option value="asia">Asia</option>
-                    <option value="northamerica">North America</option>
-                    <option value="southamerica">South America</option>
-                    <option value="australia">Australia</option>
-                    <option value="antartica">Antartica</option>
-                </select><br><br>
-                <label for="foto" name="foto">Add the team logo : </label><br>
-                <input type="file" id="foto" name="foto" accept="image/*" required><br><br>
+       <div class="form">
+       <div class="form">
+        <form action="../homepage/edit.php" method="post" enctype="multipart/form-data">
+            <label for="name">Your Team:</label><br>
+            <input type="text" name="name" value="<?php echo $teamName; ?>" required><br><br>
 
-                <div class="ratings">
-                    <h2>Your Ratings:</h2>
-                    <p>
-                        <?php
-                        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                            echo $ratings; // Display the random rating
-                        }
-                        ?>
-                    </p>
-                </div>
+            <label for="continent">Choose a continent:</label><br>
+            <select name="continent" id="cars">
+                <option value="europe" <?php echo ($continent == "europe") ? "selected" : ""; ?>>Europe</option>
+                <option value="asia" <?php echo ($continent == "asia") ? "selected" : ""; ?>>Asia</option>
+                <option value="northamerica" <?php echo ($continent == "northamerica") ? "selected" : ""; ?>>North America</option>
+                <option value="southamerica" <?php echo ($continent == "southamerica") ? "selected" : ""; ?>>South America</option>
+                <option value="australia" <?php echo ($continent == "australia") ? "selected" : ""; ?>>Australia</option>
+                <option value="antartica" <?php echo ($continent == "antartica") ? "selected" : ""; ?>>Antartica</option>
+            </select><br><br>
 
-                <button type="submit">Submit</button>
-             </form>
-        </div>
-
-
+            <label for="foto">Add the team logo:</label><br>
+            <input type="file" name="foto" accept="image/*" required><br><br>
+            <button type="submit" name="submit">Submit</button>
+        </form>
+    </div>
     
 
 
@@ -120,6 +110,10 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         audio.volume = 0.5; 
       }
     });
+    setTimeout(() => {
+        document.getElementById("ratingDisplay").style.visibility = "visible";
+    }, 5000);
   </script>
+  
 </body>
 </html>
