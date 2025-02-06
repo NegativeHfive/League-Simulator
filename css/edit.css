@@ -86,3 +86,51 @@ body {
     background-color: black;
     color: goldenrod;
 }
+
+h1{
+    text-align: center;
+    margin-top: 5%;
+    font-family: Without;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+}
+
+.form input{
+    width: 35%;
+    height: 5vh;
+    text-align: center;
+    font-family: questrail;
+}
+
+.form select{
+    width: 20%;
+    text-align: center;
+    font-family: questrail;
+}
+
+.form select option {
+    font-family: 'questrail', sans-serif;
+}
+
+.form label{
+    font-family: questrail;
+}
+
+.form button{
+    font-family: null;
+    padding: 10px;
+    background-color: black;
+    color: gold;
+    border: none;
+}
+
+.form .foto{
+    width:15%;
+    margin-top: 2%;
+    font-family: questrail;
+}

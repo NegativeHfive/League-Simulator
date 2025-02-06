@@ -23,9 +23,17 @@
                     <ion-icon name="home"></ion-icon>
                     <a href="../leaguehome.php" class="homelink">Home</a>
                 </div>
+                <div class="home">
+                    <ion-icon name="home"></ion-icon>
+                    <a href="../homepage/hometeam.php" class="homelink">Fixtures</a>
+                </div>
                 <div class="rankings">
                     <ion-icon name="podium"></ion-icon>
                     <a href="#" class="rankingslink">Rankings</a>
+                </div>
+                <div class="help">
+                    <ion-icon name="create"></ion-icon>
+                    <a href="../homepage/add.php" class="editlink">Add Teams</a>
                 </div>
                 <div class="help">
                     <ion-icon name="create"></ion-icon>
