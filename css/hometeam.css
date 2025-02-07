@@ -86,3 +86,65 @@ body {
     background-color: black;
     color: goldenrod;
 }
+
+.week{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 5%;
+    font-family: without;
+}
+
+.week a{
+    font-size: 3em;
+}
+
+h3{
+    text-align: center;
+    font-family: questrail;
+}
+
+.match-form{
+    width: 100%;
+    text-align: center;
+}
+
+.match-form button{
+    padding: 5px;
+    margin-left: 12px;
+    margin-top: 2%;
+}
+
+.foto{
+  width: 50px;
+  height: 50px;
+  object-fit: cover; 
+  border-radius: 5px; 
+  border: none;
+}
+
+.foto1{
+     width: 50px;
+  height: 50px;
+  object-fit: cover; 
+  border-radius: 5px; 
+  border: none;
+}
+
+.gameday{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    justify-content: space-evenly;
+}
+
+.score{
+    font-family: null;
+    font-size: 2em;
+}
+

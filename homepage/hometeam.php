@@ -1,4 +1,6 @@
 <?php
+session_start();  // Make sure session is started
+
 include_once "../includes/Database.php";
 include_once "../Classes/Game.php";  // Include the Game class
 
@@ -8,7 +10,7 @@ $game = new Game();  // Create a new game object
 $currentWeek = isset($_GET['week']) ? (int)$_GET['week'] : 1;
 
 // Ensure the week is not less than 1
-if ($currentWeek < 2) {
+if ($currentWeek < 1) {
     $currentWeek = 1;
 }
 
@@ -16,9 +18,6 @@ $game->generateWeeklyFixtures($currentWeek);
 
 // Get the fixtures for this week
 $fixtures = $game->getFixturesForWeek($currentWeek);
-echo "<pre>";
-print_r($fixtures); // Check if any fixtures are returned for this week
-echo "</pre>";
 
 // Handle form submission for simulating or saving results
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -30,7 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $simulatedResult = $game->simulateMatchScore($homeTeamID, $awayTeamID);
         $homeScore = $simulatedResult['home_score'];
         $awayScore = $simulatedResult['away_score'];
-        
+
+        // Store the simulated score in session to persist it across page reloads
+        $_SESSION['simulated_results'][$homeTeamID][$awayTeamID] = [
+            'home_score' => $homeScore,
+            'away_score' => $awayScore,
+        ];
+
+        // Show the simulated result to the user
         echo "<p>Simulated result: Home Team {$homeScore} - Away Team {$awayScore}</p>";
     }
     
@@ -38,21 +44,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Save match result to the database
         $homeTeamID = $_POST['home_team_id'];
         $awayTeamID = $_POST['away_team_id'];
-        
-        // Get the simulated result
-        $simulatedResult = $game->simulateMatchScore($homeTeamID, $awayTeamID);
-        $homeScore = $simulatedResult['home_score'];
-        $awayScore = $simulatedResult['away_score'];
-        
-        // Save to the database
-        $game->saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore);
-        
-        echo "<p>Game result saved: Home Team {$homeScore} - Away Team {$awayScore}</p>";
+
+        // Check if simulated result exists for this match
+        if (isset($_SESSION['simulated_results'][$homeTeamID][$awayTeamID])) {
+            $simulatedResult = $_SESSION['simulated_results'][$homeTeamID][$awayTeamID];
+            $homeScore = $simulatedResult['home_score'];
+            $awayScore = $simulatedResult['away_score'];
+
+            // Debug: Verify that the scores are correct
+            echo "<p>Saving result for match: Home {$homeScore} - Away {$awayScore}</p>";
+
+            // Call the save function from the Game class
+            if ($game->saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore)) {
+                echo "<p>Game result saved: Home Team {$homeScore} - Away Team {$awayScore}</p>";
+                // Clear the simulated result from the session after saving it
+                unset($_SESSION['simulated_results'][$homeTeamID][$awayTeamID]);
+            } else {
+                echo "<p>Error saving the result. Please try again.</p>";
+            }
+        } else {
+            echo "<p>No simulated result found for this match.</p>";
+        }
     }
 }
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-   <div class="navbar">
+<div class="navbar">
             <h2>negative.</h2>
             <div class="icons">
                 <div class="home">
@@ -117,29 +133,36 @@ if ($fixtures && count($fixtures) > 0) {
         $awayTeam = $game->getTeamById($fixture['awayteam']);
         
         if ($homeTeam && $awayTeam) {
+            echo "<div class='match-form'>";
             echo "<form method='POST'>";
-            echo "<h3>{$homeTeam['name']} vs {$awayTeam['name']} - Week: {$fixture['week_number']}</h3>";
+            echo "<div class='gameday'>";
+            echo "<img src='{$homeTeam['foto']}' width='50' height='50' class='foto'>";
+            echo "<h3>{$homeTeam['name']} vs {$awayTeam['name']}</h3>";
+            echo "<img src='{$awayTeam['foto']}' width='50' height='50' class='foto1'></div>";
+
             echo "<input type='hidden' name='home_team_id' value='{$homeTeam['ID']}'>";
             echo "<input type='hidden' name='away_team_id' value='{$awayTeam['ID']}'>";
-            
+
+            // Display simulated score if available in session
+            if (isset($_SESSION['simulated_results'][$homeTeam['ID']][$awayTeam['ID']])) {
+                $simulatedScore = $_SESSION['simulated_results'][$homeTeam['ID']][$awayTeam['ID']];
+                echo "<p class='score'>{$simulatedScore['home_score']} - {$simulatedScore['away_score']}</p>";
+            }
+
             // Simulate Button
             echo "<button type='submit' name='simulate'>Simulate Score</button>";
 
             // Save Button
             echo "<button type='submit' name='save'>Save Result</button>";
-            
+
             echo "</form>";
+            echo "</div>"; // End match-form div
         }
     }
 } else {
     echo "<p>No fixtures available for this week.</p>";
 }
 ?>
-
-
-
-
-
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -153,7 +176,7 @@ if ($fixtures && count($fixtures) > 0) {
         audio.volume = 0.1; 
       }
     });
-  </script>
-    
+</script>
+
 </body>
 </html>

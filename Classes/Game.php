@@ -4,9 +4,11 @@ include_once "../includes/Database.php";  // Make sure to include your Database 
 class Game {
 
     private $db;
+    private $currentWeek;
 
-    public function __construct() {
-        $this->db = new Database();  // Assuming you have a Database class to connect to the DB
+    public function __construct($currentWeek = 1) {
+        $this->db = new Database(); 
+        $this->currentWeek = $currentWeek; // Assuming you have a Database class to connect to the DB
     }
 
     // Function to fetch all teams
@@ -25,30 +27,35 @@ class Game {
     
 
 
-public function getFixturesForWeek($weekNumber) {
-    $query = "SELECT * FROM game WHERE week_number = :week_number";
-    $parameters = [':week_number' => $weekNumber];
-    
-    return $this->db->run($query, $parameters)->fetchAll(PDO::FETCH_ASSOC);
-}
-
-    // Function to fetch the match history to avoid repeating matchups
-    public function getMatchHistory() {
-        $query = "SELECT team1_id, team2_id FROM match_history";
-        return $this->db->run($query)->fetchAll(PDO::FETCH_ASSOC);
+    public function getFixturesForWeek($weekNumber) {
+        $query = "SELECT * FROM game WHERE week_number = :week_number";
+        $parameters = [':week_number' => $weekNumber];
+        
+        return $this->db->run($query, $parameters)->fetchAll(PDO::FETCH_ASSOC);
     }
+
+        // Function to fetch the match history to avoid repeating matchups
+        public function getMatchHistory() {
+            $query = "SELECT team1_id, team2_id FROM match_history";
+            return $this->db->run($query)->fetchAll(PDO::FETCH_ASSOC);
+        }
 
 
     // Function to check if two teams have played before
-    private function hasPlayedBefore($team1_id, $team2_id, $matchHistory, $week) {
-        foreach ($matchHistory as $match) {
-            if (($match['team1_id'] == $team1_id && $match['team2_id'] == $team2_id) || 
-                ($match['team1_id'] == $team2_id && $match['team2_id'] == $team1_id)) {
-                return true;  // Teams have already played
-            }
-        }
-        return false;  // Teams haven't played before
-    }
+    private function hasPlayedBefore($team1_id, $team2_id) {
+    $query = "SELECT COUNT(*) FROM game WHERE 
+              ((hometeam = :team1_id AND awayteam = :team2_id) 
+              OR (hometeam = :team2_id AND awayteam = :team1_id))";
+    
+    $params = [
+        ':team1_id' => $team1_id,
+        ':team2_id' => $team2_id
+    ];
+
+    $count = $this->db->run($query, $params)->fetchColumn();
+    return $count > 0;  // If count > 0, the teams have already played
+}
+
 
     // Function to simulate all games for the week and save results in the DB
     public function simulateWeekGames($fixtures) {
@@ -91,52 +98,68 @@ public function getFixturesForWeek($weekNumber) {
     return count($result) > 0;  // Returns true if fixtures exist for the week, false if not
 }
 
-   public function generateWeeklyFixtures($week) {
-    // Check if fixtures already exist for this week
+public function fixtureExists($week, $homeTeamID, $awayTeamID) {
+    $query = "SELECT COUNT(*) FROM game WHERE week_number = :week_number 
+              AND ((hometeam = :hometeam AND awayteam = :awayteam) 
+              OR (hometeam = :awayteam AND awayteam = :hometeam))";
+    $params = [
+        ':week_number' => $week,
+        ':hometeam' => $homeTeamID,
+        ':awayteam' => $awayTeamID
+    ];
+    
+    $count = $this->db->run($query, $params)->fetchColumn();
+    return $count > 0;  // If count > 0, fixture already exists
+}
+
+
+public function generateWeeklyFixtures($week) {
     if ($this->checkFixturesExistForWeek($week)) {
-        // Fixtures for this week already exist, so we don't generate new ones
         echo "<p>Fixtures already exist for Week {$week}.</p>";
         return [];
-        //
     }
 
-    $teams = $this->getAllTeams();  // Get all teams
-    $matchHistory = $this->getMatchHistory();  // Get match history to avoid duplicates
+    $teams = $this->getAllTeams();  
     $fixtures = [];
-    $playedTeams = [];  // To track teams that have already played in the current week
+    $playedTeams = [];
 
-    // Loop through teams to create matchups
+    shuffle($teams); // Randomize the teams to get different matchups each week
+
     for ($i = 0; $i < count($teams); $i++) {
         for ($j = $i + 1; $j < count($teams); $j++) {
             $team1 = $teams[$i];
             $team2 = $teams[$j];
 
-            // Check if these teams have already played in this week or previous weeks
-            if (!$this->hasPlayedBefore($team1['ID'], $team2['ID'], $matchHistory, $week) &&
-                !in_array($team1['ID'], $playedTeams) && !in_array($team2['ID'], $playedTeams)) {
-                // If they haven't played before and both teams haven't already played, add them to the fixtures
+            // Check if they have already played in the current week or if the fixture already exists
+            if (!$this->hasPlayedBefore($team1['ID'], $team2['ID']) &&
+                !in_array($team1['ID'], $playedTeams) && 
+                !in_array($team2['ID'], $playedTeams) &&
+                !$this->fixtureExists($week, $team1['ID'], $team2['ID'])) {
+                
                 $fixtures[] = [
                     'hometeam' => $team1['ID'],
                     'awayteam' => $team2['ID'],
-                    'week' => $week // Assigning the week number to the fixture
+                    'week' => $week
                 ];
 
-                // Mark both teams as "played" for this week
                 $playedTeams[] = $team1['ID'];
                 $playedTeams[] = $team2['ID'];
             }
         }
     }
 
-    $this->saveFixturesForWeek($week, $fixtures);
+    if (!empty($fixtures)) {
+        $this->saveFixturesForWeek($week, $fixtures);
+    }
 
-    // Debug: print generated fixtures
     echo "<pre>";
     print_r($fixtures);
     echo "</pre>";
 
     return $fixtures;
 }
+
+
     public function simulateMatchScore($homeTeamID, $awayTeamID) {
     // Simulate the match score
     $homeScore = rand(0, 5);  
@@ -148,23 +171,43 @@ public function getFixturesForWeek($weekNumber) {
     ];
 }
 
-public function saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore) {
-    // Save the game result into the database
-    $homePoints = ($homeScore > $awayScore) ? 3 : (($homeScore == $awayScore) ? 1 : 0);
-    $awayPoints = ($awayScore > $homeScore) ? 3 : (($homeScore == $awayScore) ? 1 : 0);
+ public function saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore) {
+        // Check if the result already exists for this match
+        $query = "SELECT COUNT(*) FROM game WHERE hometeam = :hometeam 
+                  AND awayteam = :awayteam AND week_number = :week_number";
+        $params = [
+            ':hometeam' => $homeTeamID,
+            ':awayteam' => $awayTeamID,
+            ':week_number' => $this->currentWeek  // Use the class property
+        ];
 
-    $query = "INSERT INTO game (hometeam, awayteam, homescore, awayscore, homepoint, awaypoint) 
-              VALUES (:hometeam, :awayteam, :homescore, :awayscore, :homepoint, :awaypoint)";
-    $params = [
-        ':hometeam' => $homeTeamID,
-        ':awayteam' => $awayTeamID,
-        ':homescore' => $homeScore,
-        ':awayscore' => $awayScore,
-        ':homepoint' => $homePoints,
-        ':awaypoint' => $awayPoints
-    ];
-    $this->db->run($query, $params);
-}
+        $count = $this->db->run($query, $params)->fetchColumn();
+
+        if ($count > 0) {
+            echo "<p>Result for this match already exists!</p>";
+            return false;
+        }
+
+        // If the result doesn't exist, proceed with saving
+        $homePoints = ($homeScore > $awayScore) ? 3 : (($homeScore == $awayScore) ? 1 : 0);
+        $awayPoints = ($awayScore > $homeScore) ? 3 : (($homeScore == $awayScore) ? 1 : 0);
+
+        $query = "INSERT INTO game (hometeam, awayteam, homescore, awayscore, homepoint, awaypoint, week_number) 
+                  VALUES (:hometeam, :awayteam, :homescore, :awayscore, :homepoint, :awaypoint, :week_number)";
+        $params = [
+            ':hometeam' => $homeTeamID,
+            ':awayteam' => $awayTeamID,
+            ':homescore' => $homeScore,
+            ':awayscore' => $awayScore,
+            ':homepoint' => $homePoints,
+            ':awaypoint' => $awayPoints,
+            ':week_number' => $this->currentWeek  // Ensure this is set correctly
+        ];
+
+        $this->db->run($query, $params);
+        return true;
+    }
+
 
 public function saveFixturesForWeek($week, $fixtures) {
     foreach ($fixtures as $fixture) {

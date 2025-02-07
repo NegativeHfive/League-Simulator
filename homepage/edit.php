@@ -53,7 +53,7 @@ include_once "../Classes/Team.php";
 
 <table border="0">
     <thead>
-        <tr>
+        <tr class="headers">
             <th>Logo</th>
             <th>Team</th>
             <th>Continent</th>
