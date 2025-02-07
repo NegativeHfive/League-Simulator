@@ -34,3 +34,14 @@
 
 ## hoe ziet het eruit als alles werkt 
 - Heel simpel het array() moet niet leeg zijn en je ziet wel teams moeten tegen elkaar spelen
+
+## Probleem gefixed
+- Probleem is nu gefixed . Fixtures zijn nu zichtbaar maar er zijn nu andere problemen
+
+## Wat he ik geleerd 
+- ik moest een andere functie toevoegen 
+- ik moet mijn code goed begrijppen en zelf alles checken voor de zekerheid.
+- Met chat gpt werkt alles sneller maar als je je code niet goed begrijp , heb je een grote probleem
+
+## Probleemen die ik nu tegen aan loopt 
+- Teams spelen tegen elkaar bij elke week dat is niet zo . Elke week moet een team tegen een andere team spelen.

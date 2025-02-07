@@ -16,7 +16,6 @@ $game->generateWeeklyFixtures($currentWeek);
 
 // Get the fixtures for this week
 $fixtures = $game->getFixturesForWeek($currentWeek);
-$fixtures = $game->getFixturesForWeek($currentWeek);
 echo "<pre>";
 print_r($fixtures); // Check if any fixtures are returned for this week
 echo "</pre>";
@@ -40,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $homeTeamID = $_POST['home_team_id'];
         $awayTeamID = $_POST['away_team_id'];
         
-        // Get the simulated result (or you can use actual scores)
+        // Get the simulated result
         $simulatedResult = $game->simulateMatchScore($homeTeamID, $awayTeamID);
         $homeScore = $simulatedResult['home_score'];
         $awayScore = $simulatedResult['away_score'];
@@ -51,6 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<p>Game result saved: Home Team {$homeScore} - Away Team {$awayScore}</p>";
     }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,12 +113,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php
 if ($fixtures && count($fixtures) > 0) {
     foreach ($fixtures as $fixture) {
-        $homeTeam = $game->getTeamById($fixture['home']);
-        $awayTeam = $game->getTeamById($fixture['away']);
+        $homeTeam = $game->getTeamById($fixture['hometeam']);
+        $awayTeam = $game->getTeamById($fixture['awayteam']);
         
         if ($homeTeam && $awayTeam) {
             echo "<form method='POST'>";
-            echo "<h3>{$homeTeam['name']} vs {$awayTeam['name']} - Week: {$fixture['week']}</h3>";
+            echo "<h3>{$homeTeam['name']} vs {$awayTeam['name']} - Week: {$fixture['week_number']}</h3>";
             echo "<input type='hidden' name='home_team_id' value='{$homeTeam['ID']}'>";
             echo "<input type='hidden' name='away_team_id' value='{$awayTeam['ID']}'>";
             
