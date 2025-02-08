@@ -1,13 +1,16 @@
 <?php
-session_start();  // Make sure session is started
+session_start();
+//session_destroy();  // Make sure session is started
 
 include_once "../includes/Database.php";
 include_once "../Classes/Game.php";  // Include the Game class
 
+$currentWeek = null;
+
 $game = new Game();  // Create a new game object
 
 // Get the current week from the URL, defaulting to week 1 if not provided
-$currentWeek = isset($_GET['week']) ? (int)$_GET['week'] : 1;
+$currentWeek = isset($_GET['week']) && is_numeric($_GET['week']) && $_GET['week'] > 0 ? (int)$_GET['week'] : 1;
 
 // Ensure the week is not less than 1
 if ($currentWeek < 1) {
@@ -55,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<p>Saving result for match: Home {$homeScore} - Away {$awayScore}</p>";
 
             // Call the save function from the Game class
-            if ($game->saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore)) {
+            if ($game->saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore,$currentWeek)) {
                 echo "<p>Game result saved: Home Team {$homeScore} - Away Team {$awayScore}</p>";
                 // Clear the simulated result from the session after saving it
                 unset($_SESSION['simulated_results'][$homeTeamID][$awayTeamID]);

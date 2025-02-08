@@ -171,27 +171,41 @@ public function generateWeeklyFixtures($week) {
     ];
 }
 
- public function saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore) {
-        // Check if the result already exists for this match
-        $query = "SELECT COUNT(*) FROM game WHERE hometeam = :hometeam 
-                  AND awayteam = :awayteam AND week_number = :week_number";
+// Ensure the correct week number is passed when saving the result
+public function saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore, $weekNumber) {
+    $homeScore = (int)$homeScore;
+    $awayScore = (int)$awayScore;
+
+    // Ensure that the week number is passed in the function
+    $query = "SELECT id FROM game WHERE hometeam = :hometeam 
+              AND awayteam = :awayteam 
+              AND week_number = :week_number";
+    $params = [
+        ':hometeam' => $homeTeamID,
+        ':awayteam' => $awayTeamID,
+        ':week_number' => $weekNumber // Make sure this is Week 2
+    ];
+
+    $result = $this->db->run($query, $params)->fetch(PDO::FETCH_ASSOC);
+
+    $homePoints = ($homeScore > $awayScore) ? 3 : (($homeScore == $awayScore) ? 1 : 0);
+    $awayPoints = ($awayScore > $homeScore) ? 3 : (($homeScore == $awayScore) ? 1 : 0);
+
+    if ($result) {
+        // If the match exists for the given week, update it
+        $query = "UPDATE game SET homescore = :homescore, awayscore = :awayscore, 
+                  homepoint = :homepoint, awaypoint = :awaypoint
+                  WHERE id = :game_id AND week_number = :week_number";
         $params = [
-            ':hometeam' => $homeTeamID,
-            ':awayteam' => $awayTeamID,
-            ':week_number' => $this->currentWeek  // Use the class property
+            ':homescore' => $homeScore,
+            ':awayscore' => $awayScore,
+            ':homepoint' => $homePoints,
+            ':awaypoint' => $awayPoints,
+            ':week_number' => $weekNumber,
+            ':game_id' => $result['id']
         ];
-
-        $count = $this->db->run($query, $params)->fetchColumn();
-
-        if ($count > 0) {
-            echo "<p>Result for this match already exists!</p>";
-            return false;
-        }
-
-        // If the result doesn't exist, proceed with saving
-        $homePoints = ($homeScore > $awayScore) ? 3 : (($homeScore == $awayScore) ? 1 : 0);
-        $awayPoints = ($awayScore > $homeScore) ? 3 : (($homeScore == $awayScore) ? 1 : 0);
-
+    } else {
+        // Insert the match result for the correct week
         $query = "INSERT INTO game (hometeam, awayteam, homescore, awayscore, homepoint, awaypoint, week_number) 
                   VALUES (:hometeam, :awayteam, :homescore, :awayscore, :homepoint, :awaypoint, :week_number)";
         $params = [
@@ -201,12 +215,22 @@ public function generateWeeklyFixtures($week) {
             ':awayscore' => $awayScore,
             ':homepoint' => $homePoints,
             ':awaypoint' => $awayPoints,
-            ':week_number' => $this->currentWeek  // Ensure this is set correctly
+            ':week_number' => $weekNumber // Pass Week 2 here!
         ];
-
-        $this->db->run($query, $params);
-        return true;
     }
+
+    $this->db->run($query, $params);
+
+    // Return success message
+    echo json_encode([
+        "success" => true,
+        "message" => "Result saved successfully for Week {$weekNumber}!",
+        "homeScore" => $homeScore,
+        "awayScore" => $awayScore
+    ]);
+}
+
+
 
 
 public function saveFixturesForWeek($week, $fixtures) {
