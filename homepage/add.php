@@ -103,6 +103,25 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     </div>
     
 
+       <div class="footer">
+          <div class="links">
+            <a href="./leaguehome.php">Home</a>
+            <a href="./aboutme.php">About Me</a>
+            <a href="./help.php">Help</a>
+          </div>
+
+          <div class="footericon">
+            <ion-icon name="logo-facebook"></ion-icon>
+            <ion-icon name="logo-youtube"></ion-icon>
+            <ion-icon name="logo-designernews"></ion-icon>
+            <ion-icon name="logo-amazon"></ion-icon>
+          </div>
+
+          <div class="passages">
+            <p>Project made By Godrine Manu</p>
+            <p>&copy; 2025</p>
+          </div>
+       </div>
 
 
 
