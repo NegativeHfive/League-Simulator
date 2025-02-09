@@ -1,24 +1,21 @@
 <?php
-include_once "../Classes/Team.php";
+
 
 
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Teams</title>
-    <link rel="stylesheet" href="../css/edit.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <audio id="bgMusic" src="../audio/CITY by Louis Culture.mp3" autoplay loop></audio>
+    <title>Rankings</title>
+    <link rel="stylesheet" href="../css/ranking.css">
 </head>
 <body>
     
- <div class="navbar">
+    <div class="navbar">
             <h2>negative.</h2>
             <div class="icons">
                 <div class="home">
@@ -48,38 +45,13 @@ include_once "../Classes/Team.php";
             </div>
         </div>
 
-        <h1>Edit your Team</h1>
 
-
-<table border="0">
-    <thead>
-        <tr class="headers">
-            <th>Logo</th>
-            <th>Team</th>
-            <th>Continent</th>
-            <th>Ratings</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php 
-            include_once "../Classes/Team.php";
-            $team = new Team();
-            $team->renderTeams();
-        ?>
-    </tbody>
-</table>
-
-
-
-
- 
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script src="../js/music.js" defer></script>
-<script src="../js/team.js" defer></script>
+<script src="../js/homepage.js" defer></script>
 <script>
     window.addEventListener("load", () => {
       let audio = document.getElementById("bgMusic");
@@ -87,9 +59,6 @@ include_once "../Classes/Team.php";
         audio.volume = 0.1; 
       }
     });
-    setTimeout(() => {
-        document.getElementById("ratingDisplay").style.visibility = "visible";
-    }, 5000);
-  </script>   
+</script>
 </body>
 </html>

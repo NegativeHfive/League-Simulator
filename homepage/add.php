@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 </div>
                 <div class="rankings">
                     <ion-icon name="podium"></ion-icon>
-                    <a href="#" class="rankingslink">Rankings</a>
+                    <a href="../homepage/ranking.php" class="rankingslink">Rankings</a>
                 </div>
                 <div class="help">
                     <ion-icon name="create"></ion-icon>

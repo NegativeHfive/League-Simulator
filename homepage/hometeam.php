@@ -1,14 +1,13 @@
 <?php
 session_start();
-//session_destroy();  // Make sure session is started
+//session_destroy();  
 
 include_once "../includes/Database.php";
-include_once "../Classes/Game.php";  // Include the Game class
+include_once "../Classes/Game.php";  
 
 $currentWeek = null;
 
-$game = new Game();  // Create a new game object
-
+$game = new Game();  
 // Get the current week from the URL, defaulting to week 1 if not provided
 $currentWeek = isset($_GET['week']) && is_numeric($_GET['week']) && $_GET['week'] > 0 ? (int)$_GET['week'] : 1;
 
@@ -19,7 +18,7 @@ if ($currentWeek < 1) {
 
 $game->generateWeeklyFixtures($currentWeek);
 
-// Get the fixtures for this week
+
 $fixtures = $game->getFixturesForWeek($currentWeek);
 
 // Handle form submission for simulating or saving results
@@ -96,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="rankings">
                     <ion-icon name="podium"></ion-icon>
-                    <a href="#" class="rankingslink">Rankings</a>
+                    <a href="../homepage/ranking.php" class="rankingslink">Rankings</a>
                 </div>
                 <div class="help">
                     <ion-icon name="create"></ion-icon>
@@ -146,20 +145,18 @@ if ($fixtures && count($fixtures) > 0) {
             echo "<input type='hidden' name='home_team_id' value='{$homeTeam['ID']}'>";
             echo "<input type='hidden' name='away_team_id' value='{$awayTeam['ID']}'>";
 
-            // Display simulated score if available in session
+            
             if (isset($_SESSION['simulated_results'][$homeTeam['ID']][$awayTeam['ID']])) {
                 $simulatedScore = $_SESSION['simulated_results'][$homeTeam['ID']][$awayTeam['ID']];
                 echo "<p class='score'>{$simulatedScore['home_score']} - {$simulatedScore['away_score']}</p>";
             }
 
-            // Simulate Button
             echo "<button type='submit' name='simulate'>Simulate Score</button>";
 
-            // Save Button
             echo "<button type='submit' name='save'>Save Result</button>";
 
             echo "</form>";
-            echo "</div>"; // End match-form div
+            echo "</div>"; 
         }
     }
 } else {
