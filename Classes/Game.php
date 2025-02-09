@@ -1,5 +1,5 @@
 <?php
-include_once "../includes/Database.php";  // Make sure to include your Database class
+include_once "../includes/Database.php";  
 
 class Game {
 
@@ -8,16 +8,16 @@ class Game {
 
     public function __construct($currentWeek = 1) {
         $this->db = new Database(); 
-        $this->currentWeek = $currentWeek; // Assuming you have a Database class to connect to the DB
+        $this->currentWeek = $currentWeek; 
     }
 
-    // Function to fetch all teams
+    // deze functie haalt alle teams
     public function getAllTeams() {
         $query = "SELECT * FROM teams";
         return $this->db->run($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-     // Function to fetch a team by ID
+     //deze functie haalt een team door zijn ID
    public function getTeamById($teamId) {
     $query = "SELECT * FROM teams WHERE ID = :ID";
     $params = [':ID' => $teamId];
@@ -26,7 +26,7 @@ class Game {
 
     
 
-
+    // deze functie haalt een wedstijd voor het week.
     public function getFixturesForWeek($weekNumber) {
         $query = "SELECT * FROM game WHERE week_number = :week_number";
         $parameters = [':week_number' => $weekNumber];
@@ -34,14 +34,15 @@ class Game {
         return $this->db->run($query, $parameters)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-        // Function to fetch the match history to avoid repeating matchups
+        // functie om alle westrijd gescheidenis te halen . 
+        // niet meer nodig omdat het tabel wordt niet gebruikt maar nuttig
         public function getMatchHistory() {
             $query = "SELECT team1_id, team2_id FROM match_history";
             return $this->db->run($query)->fetchAll(PDO::FETCH_ASSOC);
         }
 
 
-    // Function to check if two teams have played before
+    // Functie om te checken of twee teams hebben tegen elkaar gespeeld
     private function hasPlayedBefore($team1_id, $team2_id) {
     $query = "SELECT COUNT(*) FROM game WHERE 
               ((hometeam = :team1_id AND awayteam = :team2_id) 
@@ -57,24 +58,24 @@ class Game {
 }
 
 
-    // Function to simulate all games for the week and save results in the DB
+    // Function om alle wedstijden te simuleren
     public function simulateWeekGames($fixtures) {
         foreach ($fixtures as $fixture) {
             $homeTeamID = $fixture['home'];
             $awayTeamID = $fixture['away'];
 
-            // Simulate scores (random values for now)
+            // scores zijn tussen 0-5 kan meer met het zou onrealistisch zijn
             $homeScore = rand(0, 5);  
             $awayScore = rand(0, 5);
 
-            // Points logic (adjust as needed)
+            // punten logica
             $homePoints = ($homeScore > $awayScore) ? 3 : (($homeScore == $awayScore) ? 1 : 0);
             $awayPoints = ($awayScore > $homeScore) ? 3 : (($homeScore == $awayScore) ? 1 : 0);
 
-            // Save the match result into the database
+            // dit bewaard wedstrijden 
             $this->saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore, $homePoints, $awayPoints);
 
-            // Log this match into match history to avoid repetition
+            
             $this->saveMatchHistory($homeTeamID, $awayTeamID);
         }
     }
@@ -113,6 +114,7 @@ public function fixtureExists($week, $homeTeamID, $awayTeamID) {
 }
 
 
+// dit genenereet weeklijks wedstrijden
 public function generateWeeklyFixtures($week) {
     if ($this->checkFixturesExistForWeek($week)) {
         echo "<p>Fixtures already exist for Week {$week}.</p>";
@@ -171,19 +173,18 @@ public function generateWeeklyFixtures($week) {
     ];
 }
 
-// Ensure the correct week number is passed when saving the result
+
 public function saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore, $weekNumber) {
     $homeScore = (int)$homeScore;
     $awayScore = (int)$awayScore;
 
-    // Ensure that the week number is passed in the function
     $query = "SELECT id FROM game WHERE hometeam = :hometeam 
               AND awayteam = :awayteam 
               AND week_number = :week_number";
     $params = [
         ':hometeam' => $homeTeamID,
         ':awayteam' => $awayTeamID,
-        ':week_number' => $weekNumber // Make sure this is Week 2
+        ':week_number' => $weekNumber 
     ];
 
     $result = $this->db->run($query, $params)->fetch(PDO::FETCH_ASSOC);
@@ -192,7 +193,7 @@ public function saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore,
     $awayPoints = ($awayScore > $homeScore) ? 3 : (($homeScore == $awayScore) ? 1 : 0);
 
     if ($result) {
-        // If the match exists for the given week, update it
+        
         $query = "UPDATE game SET homescore = :homescore, awayscore = :awayscore, 
                   homepoint = :homepoint, awaypoint = :awaypoint
                   WHERE id = :game_id AND week_number = :week_number";
@@ -205,7 +206,7 @@ public function saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore,
             ':game_id' => $result['id']
         ];
     } else {
-        // Insert the match result for the correct week
+        
         $query = "INSERT INTO game (hometeam, awayteam, homescore, awayscore, homepoint, awaypoint, week_number) 
                   VALUES (:hometeam, :awayteam, :homescore, :awayscore, :homepoint, :awaypoint, :week_number)";
         $params = [
@@ -215,7 +216,7 @@ public function saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore,
             ':awayscore' => $awayScore,
             ':homepoint' => $homePoints,
             ':awaypoint' => $awayPoints,
-            ':week_number' => $weekNumber // Pass Week 2 here!
+            ':week_number' => $weekNumber 
         ];
     }
 
