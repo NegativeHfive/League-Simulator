@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(45deg, gold, orange, red, tomato);
+    background: linear-gradient(45deg, gold, orange, beige, aliceblue);
     background-size: 5000% 5000%;
     animation: gradientMove 10s ease infinite;
     overflow-x: hidden;
@@ -85,6 +85,15 @@ body {
 .icons div:hover{
     background-color: black;
     color: goldenrod;
+}
+
+
+img{
+  width: 50px;
+  height: 50px;
+  object-fit: cover; 
+  border-radius: 5px; 
+  border: none;
 }
 
 
