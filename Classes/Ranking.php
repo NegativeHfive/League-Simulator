@@ -9,8 +9,8 @@ class Ranking {
         $this->db = new Database();
     }
 
+    // deze functie zet maakt het rankiings
   public function updateRankings() {
-    // Get all games with home and away team names + fotos
     $query = "SELECT 
                 g.hometeam, g.awayteam, g.homepoint, g.awaypoint,
                 t1.name AS home_team_name, t1.foto AS home_foto,
@@ -23,7 +23,7 @@ class Ranking {
     
     $teamStats = []; // Array to store team data
 
-    // Loop through games and calculate points, wins, losses, and draws
+    // het loopt door elke team en berekent hun punten.
     foreach ($games as $game) {
         $homeId = $game['hometeam'];
         $awayId = $game['awayteam'];
@@ -32,7 +32,6 @@ class Ranking {
         $homeFoto = $game['home_foto'];
         $awayFoto = $game['away_foto'];
         
-        // Initialize teams if not set
         if (!isset($teamStats[$homeId])) {
             $teamStats[$homeId] = ['name' => $homeName, 'foto' => $homeFoto, 'wins' => 0, 'losses' => 0, 'draws' => 0, 'points' => 0];
         }
@@ -57,14 +56,12 @@ class Ranking {
         }
     }
 
-    // Update ranking table
     foreach ($teamStats as $teamId => $stats) {
         $query = "SELECT * FROM ranking WHERE team = :team";
         $params = [':team' => $teamId];
         $existingTeam = $this->db->run($query, $params)->fetch(PDO::FETCH_ASSOC);
 
         if ($existingTeam) {
-            // Update existing record
             $updateQuery = "UPDATE ranking 
                             SET points = :points, wins = :wins, losses = :losses, draws = :draws, 
                                 team_name = :team_name, foto = :foto
@@ -80,7 +77,6 @@ class Ranking {
             ];
             $this->db->run($updateQuery, $updateParams);
         } else {
-            // Insert new record
             $insertQuery = "INSERT INTO ranking (team, team_name, foto, wins, losses, draws, points) 
                             VALUES (:team, :team_name, :foto, :wins, :losses, :draws, :points)";
             $insertParams = [
@@ -101,6 +97,7 @@ class Ranking {
 
 
 
+    // dit zorgt dat rankings worden 
     public function getRankings(){
         $sql = "SELECT * FROM ranking ORDER BY wins DESC, losses ASC";
         return $this->db->run($sql)->fetchAll(PDO::FETCH_ASSOC);

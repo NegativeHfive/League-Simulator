@@ -65,9 +65,9 @@ $rankings = $ranking->getRankings();
                 $position = 1;
                 foreach ($rankings as $rank) {
                     echo "<tr>
-                            <td>{$position}</td>
+                            <td class='position'>{$position}</td>
                             <td><img src='{$rank['foto']}'></td>
-                            <td>{$rank['team_name']}</td>
+                            <td class='team'>{$rank['team_name']}</td>
                             <td>{$rank['wins']}</td>
                             <td>{$rank['losses']}</td>
                             <td>{$rank['draws']}</td>
@@ -79,6 +79,26 @@ $rankings = $ranking->getRankings();
             </tbody>
         </table>
     </div>
+
+     <div class="footer">
+          <div class="links">
+            <a href="./leaguehome.php">Home</a>
+            <a href="./aboutme.php">About Me</a>
+            <a href="./help.php">Help</a>
+          </div>
+
+          <div class="footericon">
+            <ion-icon name="logo-facebook"></ion-icon>
+            <ion-icon name="logo-youtube"></ion-icon>
+            <ion-icon name="logo-designernews"></ion-icon>
+            <ion-icon name="logo-amazon"></ion-icon>
+          </div>
+
+          <div class="passages">
+            <p>Project made By Godrine Manu</p>
+            <p>&copy; 2025</p>
+          </div>
+       </div>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
