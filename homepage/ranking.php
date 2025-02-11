@@ -13,6 +13,7 @@ $rankings = $ranking->getRankings();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rankings</title>
     <link rel="stylesheet" href="../css/ranking.css">
+    <audio id="bgMusic" src="../audio/CITY by Louis Culture.mp3" autoplay loop></audio>
 </head>
 <body>
 
@@ -41,7 +42,7 @@ $rankings = $ranking->getRankings();
             </div>
             <div class="help">
                 <ion-icon name="document-text"></ion-icon>
-                <a href="#" class="editlink">Export Data</a>
+                <a href="../homepage/csv.php" class="editlink">Export Data</a>
             </div>
         </div>
     </div>
@@ -64,7 +65,7 @@ $rankings = $ranking->getRankings();
                 <?php
                 $position = 1;
                 foreach ($rankings as $rank) {
-                    echo "<tr>
+                    echo "<tr class='fade'>
                             <td class='position'>{$position}</td>
                             <td><img src='{$rank['foto']}'></td>
                             <td class='team'>{$rank['team_name']}</td>
@@ -104,7 +105,7 @@ $rankings = $ranking->getRankings();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="../js/music.js" defer></script>
-    <script src="../js/homepage.js" defer></script>
+    <script src="../js/team.js" defer></script>
     <script>
         window.addEventListener("load", () => {
           let audio = document.getElementById("bgMusic");

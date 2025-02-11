@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 </div>
                 <div class="help">
                     <ion-icon name="document-text"></ion-icon>
-                    <a href="#" class="editlink">Export Data</a>
+                    <a href="../homepage/csv.php" class="editlink">Export Data</a>
                 </div>
             </div>
         </div>
