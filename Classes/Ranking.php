@@ -92,7 +92,7 @@ class Ranking {
         }
     }
 
-    echo "Ranking table updated successfully!";
+    
 }
 
 

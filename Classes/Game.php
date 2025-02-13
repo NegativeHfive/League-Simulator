@@ -117,7 +117,6 @@ public function fixtureExists($week, $homeTeamID, $awayTeamID) {
 // dit genenereet weeklijks wedstrijden
 public function generateWeeklyFixtures($week) {
     if ($this->checkFixturesExistForWeek($week)) {
-        echo "<p>Fixtures already exist for Week {$week}.</p>";
         return [];
     }
 
