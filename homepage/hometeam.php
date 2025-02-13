@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
 
         // Show the simulated result to the user
-        echo "<p>Simulated result: Home Team {$homeScore} - Away Team {$awayScore}</p>";
+        //echo "<p>Simulated result: Home Team {$homeScore} - Away Team {$awayScore}</p>";
     }
     
     if (isset($_POST['save'])) {
@@ -54,18 +54,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $awayScore = $simulatedResult['away_score'];
 
             // Debug: Verify that the scores are correct
-            echo "<p>Saving result for match: Home {$homeScore} - Away {$awayScore}</p>";
+            //echo "<p>Saving result for match: Home {$homeScore} - Away {$awayScore}</p>";
 
             // Call the save function from the Game class
             if ($game->saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore,$currentWeek)) {
-                echo "<p>Game result saved: Home Team {$homeScore} - Away Team {$awayScore}</p>";
+                //echo "<p>Game result saved: Home Team {$homeScore} - Away Team {$awayScore}</p>";
                 // Clear the simulated result from the session after saving it
                 unset($_SESSION['simulated_results'][$homeTeamID][$awayTeamID]);
             } else {
-                echo "<p>Error saving the result. Please try again.</p>";
+                //echo "<p>Error saving the result. Please try again.</p>";
             }
         } else {
-            echo "<p>No simulated result found for this match.</p>";
+            //echo "<p>No simulated result found for this match.</p>";
         }
     }
 }

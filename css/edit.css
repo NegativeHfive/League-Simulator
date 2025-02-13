@@ -202,6 +202,11 @@ form input{
 
 }
 
+p{
+    text-align:center;
+    font-family:questrail;
+}
+
 .editform {
     font-family: questrail;
 }

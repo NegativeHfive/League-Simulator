@@ -49,6 +49,7 @@ include_once "../Classes/Team.php";
         </div>
 
         <h1>Edit your Team</h1>
+        <p>Customize the team’s name, rating, foto, or additional details to your preference</p>
 
 
 <table border="0">

@@ -153,9 +153,7 @@ public function generateWeeklyFixtures($week) {
         $this->saveFixturesForWeek($week, $fixtures);
     }
 
-    echo "<pre>";
-    print_r($fixtures);
-    echo "</pre>";
+    
 
     return $fixtures;
 }
@@ -222,12 +220,12 @@ public function saveGameResult($homeTeamID, $awayTeamID, $homeScore, $awayScore,
     $this->db->run($query, $params);
 
     // Return success message
-    echo json_encode([
+    /*echo json_encode([
         "success" => true,
         "message" => "Result saved successfully for Week {$weekNumber}!",
         "homeScore" => $homeScore,
         "awayScore" => $awayScore
-    ]);
+    ]);*/
 }
 
 

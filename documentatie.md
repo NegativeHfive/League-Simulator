@@ -75,3 +75,13 @@ Resultaten zijn nu opgeslagen
 ![Proof voor week 1](./images/week3_1.jpg)
 - Alles zijn nu goed. dit is het tabel. Elke team heeft een ID. Dus ze spelen tegen elkaar en je ziet ook dat
 als een team tegen een andere team op een week speelt , gaan ze niet meer op een andere week tegen elkaar spelen.
+
+## WEEK 4
+
+- Een ranking systeem toevoegen . 
+
+## Problemen die ik tegen aan liep
+- Ik kwam tegen geen probleem omdat ik dit al eerder heb gedaan.
+
+## proef
+![Proof voor week 4](./images/week4.jpg)
