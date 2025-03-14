@@ -85,3 +85,10 @@ als een team tegen een andere team op een week speelt , gaan ze niet meer op een
 
 ## proef
 ![Proof voor week 4](./images/week4.jpg)
+
+## Week 5
+![Proof voor week 1](./images/week5.jpg)
+- Alles zijn nu goed. dit is het tabel. Berekening kloppen.
+
+## Problemen die ik tegen aan liep 
+- Geen Probleem 
